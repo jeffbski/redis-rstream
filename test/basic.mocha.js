@@ -29,18 +29,39 @@ function cleanup(cb) {
 before(function (done) { setupDataForKey(done); });
 after(function (done) { cleanup(done); });
 
+test('basic use streams2 binary data from key', function (done) {
+  var stream = redisRStream(client, KEY);
+  var accum = [];
+  stream
+    .on('error', function (err) { done(err); })
+    .on('readable', function () {
+      var data;
+      while ((data = stream.read()) !== null) {
+        accum.push(data);
+      }
+    })
+    .on('end', function () {
+      var allBuffer = Buffer.concat(accum);
+      var allDigest = crypto.createHash('sha1').update(allBuffer).digest('base64');
+      t.equal(allDigest, EXPECTED_DIGEST);
+      done();
+    });
+});
+
 test('basic use stream binary data from key, defaults to 64KB chunks', function (done) {
   var stream = redisRStream(client, KEY);
   var accum = [];
   stream
     .on('error', function (err) { done(err); })
-    .on('data', function (data) { accum.push(data); })
+    .on('data', function (data) {
+      accum.push(data);
+    })
     .on('end', function () {
-        var allBuffer = Buffer.concat(accum);
-        var allDigest = crypto.createHash('sha1').update(allBuffer).digest('base64');
-        t.equal(allDigest, EXPECTED_DIGEST);
-        done();
-      });
+      var allBuffer = Buffer.concat(accum);
+      var allDigest = crypto.createHash('sha1').update(allBuffer).digest('base64');
+      t.equal(allDigest, EXPECTED_DIGEST);
+      done();
+    });
 });
 
 
@@ -49,20 +70,20 @@ test('all arguments missing for factory, throws error', function () {
   function throwsErr() {
     var stream = redisRStream();
   }
-  t.throws(throwsErr, /redisRStream requires client and key/);
+  t.throws(throwsErr, /RedisRStream requires client and key/);
 });
 
 test('client null, throws error', function () {
   function throwsErr() {
     var stream = redisRStream(null, KEY);
   }
-  t.throws(throwsErr, /redisRStream requires client and key/);
+  t.throws(throwsErr, /RedisRStream requires client and key/);
 });
 
 test('key null, throws error', function () {
   function throwsErr() {
     var stream = redisRStream(client, null);
   }
-  t.throws(throwsErr, /redisRStream requires client and key/);
+  t.throws(throwsErr, /RedisRStream requires client and key/);
 });
 

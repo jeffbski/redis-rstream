@@ -1,6 +1,6 @@
 # redis-rstream
 
-redis-rstream is a node.js redis read stream which streams binary or utf8 data in chunks from a redis key using an existing redis client. Tested with mranney/node_redis client.
+redis-rstream is a node.js redis read stream which streams binary or utf8 data in chunks from a redis key using an existing redis client. (streams2) Tested with mranney/node_redis client.
 
 [![Build Status](https://secure.travis-ci.org/jeffbski/redis-rstream.png?branch=master)](http://travis-ci.org/jeffbski/redis-rstream)
 
@@ -14,7 +14,7 @@ You will also need the `redis` client (`npm install redis`) or other compatible 
 
 ## Usage
 
-Construct a read stream instance by passing in `client`, redis `key`, and optionally a `chunkSize` to stream data from. The default `chunkSize` (the size of the data packets in the stream) is 64KB. Be sure to enable an option in your client to return Buffers for the data, like `detect_buffers: true` so that binary data will be read properly.
+ - `redisRStream(client, key, [options])` - Construct a read stream instance by passing in `client`, redis `key`, and options. Be sure to enable an option in your redis client to return Buffers for the data, like `detect_buffers: true` so that binary data will be read properly. The default `options.chunkSize` (the size of the data packets in the stream) is 64KB, this is ignored if using the streams2 read(chunkSize) since the provided chunkSize will be used instead. You can limit how many pending reads are allowed for this read stream, by specifying `options.maxPendingReads` which defaults to 2.
 
 ```javascript
 var redis = require('redis');
@@ -34,7 +34,7 @@ Tested with mranney/node_redis client, but should work with any client that impl
  - Simple read stream which can use existing redis client (and especially mranney/node_redis)
  - Remove all the complexity of managing a stream and reading in chunks from a redis key
  - Create normal pausable node.js read stream which can be piped or used as any other stream
- - stream-spec compliant node.js read stream
+ - uses streams2 from node 0.10+, but is also compatible with 0.8
 
 ## Why
 
