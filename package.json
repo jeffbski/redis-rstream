@@ -21,7 +21,7 @@
     "node": ">=0.8"
   },
   "dependencies": {
-    "readable-stream": "https://github.com/jeffbski/readable-stream/tarball/v1.0.2-object-transform2"
+    "readable-stream": "https://github.com/jeffbski/readable-stream/archive/v1.0.2-object-transform2.tar.gz"
   },
   "devDependencies": {
     "mocha": "~1.9.0",
