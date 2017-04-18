@@ -1,7 +1,7 @@
 {
   "name": "redis-rstream",
   "description": "redis-rstream - node.js redis read stream which streams binary or utf8 data in chunks from a  redis key using an existing redis client (streams2)",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "author": "Jeff Barczewski <jeff.barczewski@gmail.com>",
   "repository": {
     "type": "git",
