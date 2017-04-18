@@ -14,7 +14,7 @@ You will also need the `redis` client (`npm install redis`) or other compatible 
 
 ## Usage
 
- - `redisRStream(client, key, [options])` - Construct a read stream instance by passing in `client`, redis `key`, and options. Be sure to enable an option in your redis client to return Buffers for the data, like `detect_buffers: true` so that binary data will be read properly. The default `options.chunkSize` (the size of the data packets in the stream) is 64KB, this is ignored if using the streams2 read(chunkSize) since the provided chunkSize will be used instead. You can limit how many pending reads are allowed for this read stream, by specifying `options.maxPendingReads` which defaults to 2.
+ - `redisRStream(client, key, [options])` - Construct a read stream instance by passing in `client`, redis `key`, and options. Be sure to enable an option in your redis client to return Buffers for the data, like `detect_buffers: true` so that binary data will be read properly. The default `options.chunkSize` (the size of the data packets in the stream) is 64KB, this is ignored if using the streams2 read(chunkSize) since the provided chunkSize will be used instead. You can limit how many pending reads are allowed for this read stream, by specifying `options.maxPendingReads` which defaults to 2. You also have the option to specify a range with `options.startOffset` (inclusive) and `options.endOffset` (non-inclusive), streaming only the chosen segment.
 
 ```javascript
 var redis = require('redis');
