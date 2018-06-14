@@ -34,7 +34,7 @@ Tested with mranney/node_redis client, but should work with any client that impl
  - Simple read stream which can use existing redis client (and especially mranney/node_redis)
  - Remove all the complexity of managing a stream and reading in chunks from a redis key
  - Create normal pausable node.js read stream which can be piped or used as any other stream
- - uses streams2 from node 0.10+, but is also compatible with 0.8
+ - uses streams2 from node 0.10+.
 
 ## Why
 
@@ -53,4 +53,3 @@ If you have input or ideas or would like to get involved, you may:
 ## License
 
  - [MIT license](http://github.com/jeffbski/redis-rstream/raw/master/LICENSE)
-
