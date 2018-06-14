@@ -32,6 +32,7 @@ function cleanup(cb) {
 
 before(function (done) { setupDataForKey(done); });
 after(function (done) { cleanup(done); });
+after(function () { client.quit(); })
 
 test('basic use streams2 binary data from key', function (done) {
   var stream = redisRStream(client, KEY);
@@ -107,4 +108,3 @@ test('key null, throws error', function () {
   }
   t.throws(throwsErr, /RedisRStream requires client and key/);
 });
-
